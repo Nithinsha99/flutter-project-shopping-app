@@ -1,8 +1,10 @@
 
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/models/http_expection.dart';
 import 'package:shoppingapp/provider/auth.dart';
 enum AuthMode{
   Signup,
@@ -98,6 +100,18 @@ class _AuthDataState extends State<AuthData> {
   };
   var isLoading=false;
   final passwordController=TextEditingController();
+  void dialogBoxx( String message){
+    print(message);
+    showDialog(context: context,builder: (ctx)=>AlertDialog(
+      content: Text(message),
+      title: Text("for error"),
+      actions: [
+        FlatButton(onPressed: (){
+          Navigator.of(context).pop();
+        }, child: Text("okay"))
+      ],
+    ));
+  }
   Future<void>save() async{
     if(!_formKey.currentState.validate()){
       return;
@@ -107,18 +121,43 @@ class _AuthDataState extends State<AuthData> {
       isLoading=true;
 
     });
-    if(authMode==AuthMode.loginUp){
-      print("heloo");
+    try{
+      if(authMode==AuthMode.loginUp){
 
-      ///
-    }else{
-      print("else");
-      print(_mapData["password"].length);
-      print(_mapData["email"]);
-      await Provider.of<Auth>(context,listen: false).signUp(_mapData["password"], _mapData["email"]);
+        await Provider.of<Auth>(context,listen: false).login(_mapData["password"], _mapData["email"]);
 
-      ///
+
+        ///
+      }else{
+        await Provider.of<Auth>(context,listen: false).signUp(_mapData["password"], _mapData["email"]);
+
+        ///
+      }
+    } on HttpException catch(error){
+      print("the message is come from checking");
+      var eroorMessage="the eroor in valid authintication";
+      if(error.toString().contains("EMAIL_EXISTS")){
+        eroorMessage="Email is exists";
+      }else if( error.toString().contains("INVALID_EMAIL")){
+        eroorMessage="Email is not exists";
+
+      }else if (error.toString().contains("WEAK_PASSWORD")){
+        eroorMessage="Password is weak";
+      }else if(error.toString().contains("EMAIL_NOT_FOUND")){
+        eroorMessage="The Email is not finding";
+      }else if(error.toString().contains("INVALID_PASSWORD")){
+        eroorMessage="The password is Invalid";
+      }
+
+      dialogBoxx(eroorMessage);
+
+    } catch (error){
+      print("error occured");
+      const errorMessage="The netWork Problem";
+      dialogBoxx(errorMessage);
+
     }
+
     setState(() {
       isLoading=false;
     });

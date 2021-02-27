@@ -134,7 +134,7 @@ class Productse with ChangeNotifier {
       if(response.statusCode>=400){
         _item.insert(index, loadingProducts);
         notifyListeners();
-        throw HtppExptection(message: "world n ot delte");
+        throw  HttpException("world n ot delte");
       }
       loadingProducts=null;
 
