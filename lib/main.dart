@@ -20,34 +20,35 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
+      ChangeNotifierProvider(create: (ctx)=>Auth(),),
 
-        ChangeNotifierProvider(
-        create: (ctx)=>Productse(),
+        ChangeNotifierProxyProvider<Auth,Productse>(
+        update: (_,auth,loadingScren)=>Productse(auth.token,loadingScren==null?[]:loadingScren.item),
         ),
         ChangeNotifierProvider(
         create: (ctx)=>Cart(),
         ),
      ChangeNotifierProvider(create: (ctx)=>Orders()),
-      ChangeNotifierProvider(create: (ctx)=>Auth(),)
+
 
     ],
-      child: MaterialApp(
-          theme: ThemeData( 
-            primarySwatch: Colors.orange,
-            accentColor: Colors.white,
-          ),
-          home: AuthScreen(),
-
-          routes: {
-            ProductOverScreen.rouuterName:(context)=>ProductOverScreen(),
-            ProductDetailScreen.routerName:(ctx)=>ProductDetailScreen(),
-            CartScreen.routerName:(ctx)=>CartScreen(),
-            OrdersScreen.routerName:(ctx)=>OrdersScreen(),
-            UserProductScreen.routerName:(ctx)=>UserProductScreen(),
-            EditProductScreen.routerName:(ctx)=>EditProductScreen(),
-            AuthScreen.routerName:(ctx)=>AuthScreen(),
-          },
+      child: Consumer<Auth>(builder: (ctx,auth,_)=>MaterialApp(
+        theme: ThemeData(
+          primarySwatch: Colors.orange,
+          accentColor: Colors.white,
         ),
+        home: auth.isAuth?ProductOverScreen():AuthScreen(),
+
+        routes: {
+          ProductOverScreen.rouuterName:(context)=>ProductOverScreen(),
+          ProductDetailScreen.routerName:(ctx)=>ProductDetailScreen(),
+          CartScreen.routerName:(ctx)=>CartScreen(),
+          OrdersScreen.routerName:(ctx)=>OrdersScreen(),
+          UserProductScreen.routerName:(ctx)=>UserProductScreen(),
+          EditProductScreen.routerName:(ctx)=>EditProductScreen(),
+          AuthScreen.routerName:(ctx)=>AuthScreen(),
+        },
+      ),)
     );
 
   }

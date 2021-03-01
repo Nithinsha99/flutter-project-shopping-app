@@ -40,6 +40,8 @@ class Productse with ChangeNotifier {
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpjrDtt4U-D4C1QQYZbEjDLK5CZ0QHWMJ3KA&usqp=CAU",
     ),*/
   ];
+  final String authToken;
+  Productse(this.authToken,this._item);
 
   List<Products> get item {
     return [..._item];
@@ -74,7 +76,7 @@ class Productse with ChangeNotifier {
   }
 
   Future<void> toFetchData() async {
-    const url = "https://shopping-app-28658-default-rtdb.firebaseio.com/products.json";
+    final url = "https://shopping-app-28658-default-rtdb.firebaseio.com/products.json?auth=$authToken";
     try {
       final response = await http.get(url);
 
@@ -93,12 +95,14 @@ class Productse with ChangeNotifier {
       _item=ecahItem;
       notifyListeners();
     } catch (eroor) {
+      print(eroor);
       throw eroor;
+
     }
   }
 
   Future <void> addProduct(Products products) async {
-    const url = "https://shopping-app-28658-default-rtdb.firebaseio.com/products.json";
+    const  url = "https://shopping-app-28658-default-rtdb.firebaseio.com/products.json";
     try {
       final response = await http.post(url, body: json.encode({
         "tittle": products.tittle,

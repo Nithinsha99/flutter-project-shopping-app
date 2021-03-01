@@ -24,13 +24,20 @@ class ProductOverScreen extends StatefulWidget {
 class _ProductOverScreenState extends State<ProductOverScreen> {
   var _ShowOnlyFavorite = false;
   var initStatee=true;
+  var _isLoading=true;
   @override
   void didChangeDependencies() {
-    if(initStatee){
-      Provider.of<Productse>(context).toFetchData();
-
+    if (initStatee) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Productse>(context).toFetchData(); {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
-    initStatee=false;
+    initStatee = false;
 
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
@@ -81,7 +88,7 @@ class _ProductOverScreenState extends State<ProductOverScreen> {
 
       ),
       drawer: DrawerScreen(),
-      body: ProductGrid(_ShowOnlyFavorite),
+      body: _isLoading?Center(child: CircularProgressIndicator()):ProductGrid(_ShowOnlyFavorite),
     );
   }
 }

@@ -13,6 +13,7 @@ enum AuthMode{
 class AuthScreen extends StatelessWidget {
   static const routerName="/auth screen";
 
+
   @override
   Widget build(BuildContext context) {
     final deviceSize=MediaQuery.of(context).size;
@@ -130,6 +131,7 @@ class _AuthDataState extends State<AuthData> {
         ///
       }else{
         await Provider.of<Auth>(context,listen: false).signUp(_mapData["password"], _mapData["email"]);
+        print("jjjjjjj");
 
         ///
       }
