@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoppingapp/models/product.dart';
+import 'package:shoppingapp/provider/auth.dart';
 import 'package:shoppingapp/provider/cartData.dart';
 import 'package:shoppingapp/provider/products.dart';
 import 'package:shoppingapp/screens/productDetailsScreen.dart';
@@ -11,6 +12,7 @@ class ProductItem extends StatelessWidget {
     final product = Provider.of<Products>(context, listen: false);
     final car = Provider.of<Cart>(context, listen: false);
     final carr = Provider.of<Productse>(context);
+    final authData=Provider.of<Auth>(context).token;
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, ProductDetailScreen.routerName,
@@ -35,7 +37,7 @@ class ProductItem extends StatelessWidget {
                       )
                     : Icon(Icons.favorite_border),
                 onPressed: () {
-                  product.toogle();
+                  product.toogle(authData);
                   print(carr.favoriteItem);
                 },
               ),

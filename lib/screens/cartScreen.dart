@@ -93,7 +93,7 @@ class _falatButtonState extends State<falatButton> {
 
       },
 
-      child: Text("Order now "),
+      child: che?CircularProgressIndicator():Text("Order now "),
       color: Colors.blue,
     );
   }

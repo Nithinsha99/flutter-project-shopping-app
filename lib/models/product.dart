@@ -25,11 +25,11 @@ class Products with ChangeNotifier {
     favorite=value;
     notifyListeners();
   }
-  Future<void> toogle() async{
+  Future<void> toogle(String authDta) async{
     var firstValue=favorite;
     favorite=!favorite;
     notifyListeners();
-    var url= await "https://shopping-app-28658-default-rtdb.firebaseio.com/products/$id.json";
+    var url= await "https://shopping-app-28658-default-rtdb.firebaseio.com/products/$id.json?auth=$authDta";
    try{
      var reposne=await http.patch(url,body: jsonEncode({
        "favorite":favorite
