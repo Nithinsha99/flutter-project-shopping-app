@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       ChangeNotifierProvider(create: (ctx)=>Auth(),),
 
         ChangeNotifierProxyProvider<Auth,Productse>(
-        update: (_,auth,loadingScren)=>Productse(auth.token,loadingScren==null?[]:loadingScren.item),
+        update: (_,auth,loadingScren)=>Productse(auth.token,loadingScren==null?[]:loadingScren.item,auth.userid),
         ),
         ChangeNotifierProvider(
         create: (ctx)=>Cart(),

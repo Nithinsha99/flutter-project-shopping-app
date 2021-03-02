@@ -12,7 +12,7 @@ class ProductItem extends StatelessWidget {
     final product = Provider.of<Products>(context, listen: false);
     final car = Provider.of<Cart>(context, listen: false);
     final carr = Provider.of<Productse>(context);
-    final authData=Provider.of<Auth>(context).token;
+    final authData=Provider.of<Auth>(context);
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, ProductDetailScreen.routerName,
@@ -37,7 +37,7 @@ class ProductItem extends StatelessWidget {
                       )
                     : Icon(Icons.favorite_border),
                 onPressed: () {
-                  product.toogle(authData);
+                  product.toogle(authData.token,authData.userid);
                   print(carr.favoriteItem);
                 },
               ),

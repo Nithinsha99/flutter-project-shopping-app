@@ -41,7 +41,8 @@ class Productse with ChangeNotifier {
     ),*/
   ];
   final String authToken;
-  Productse(this.authToken,this._item);
+  final String userId;
+  Productse(this.authToken,this._item,this.userId);
 
   List<Products> get item {
     return [..._item];
@@ -76,11 +77,15 @@ class Productse with ChangeNotifier {
   }
 
   Future<void> toFetchData() async {
-    final url = "https://shopping-app-28658-default-rtdb.firebaseio.com/products.json?auth=$authToken";
+    var url = "https://shopping-app-28658-default-rtdb.firebaseio.com/products.json?auth=$authToken";
     try {
       final response = await http.get(url);
 
       var loadedPrducts = jsonDecode(response.body) as Map<String, dynamic>;
+      url="https://shopping-app-28658-default-rtdb.firebaseio.com/userFavorite/$userId.json?auth=$authToken";
+      final reponse= await http.get(url);
+      final favori=jsonDecode(reponse.body);
+
       final List <Products> ecahItem = [];
       if(loadedPrducts==null){
         return;
@@ -90,7 +95,9 @@ class Productse with ChangeNotifier {
             price: productDet["price"],
             tittle: productDet["tittle"],
             decription: productDet["decription"],
-            imageUrl: productDet["imageurl"]));
+            imageUrl: productDet["imageurl"],
+          favorite:favori==null?false: favori[id1]??false,
+        ));
       });
       _item=ecahItem;
       notifyListeners();
