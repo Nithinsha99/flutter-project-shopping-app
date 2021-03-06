@@ -62,7 +62,7 @@ class AuthScreen extends StatelessWidget {
                       ..translate(-10.0),
 
 
-                    child: Text("the shop app",style: TextStyle(
+                    child: Text("fliparm",style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       fontSize: 50,
@@ -113,6 +113,7 @@ class _AuthDataState extends State<AuthData> {
         }, child: Text("okay"))
       ],
     ));
+
   }
   Future<void>save() async{
     if(!_formKey.currentState.validate()){

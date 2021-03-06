@@ -83,7 +83,9 @@ class _falatButtonState extends State<falatButton> {
           che=true;
 
         });
+        print("hello");
         await Provider.of<Orders>(context,listen: false).addOrder(widget.cart.item.values.toList(), widget.cart.totalAmount);
+
         setState(() {
           che=false;
 
@@ -93,7 +95,9 @@ class _falatButtonState extends State<falatButton> {
 
       },
 
-      child: che?CircularProgressIndicator():Text("Order now "),
+      child: che?CircularProgressIndicator(
+        backgroundColor: Colors.red,
+      ):Text("Order now "),
       color: Colors.blue,
     );
   }

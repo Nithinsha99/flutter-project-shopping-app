@@ -56,31 +56,40 @@ class Orders with ChangeNotifier {
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
     final url = "https://shopping-app-28658-default-rtdb.firebaseio.com/order.json?auth=$authToken";
-    var finall = DateTime.now();
-   final response= await htpp.post(
-      url,
-      body: json.encode({
-        "total": total,
-        "dateTime": finall.toIso8601String(),
-        "products": cartProducts
-            .map((e) => {
-              "id":e.id,
-                  "price": e.price,
-                  "quanity": e.quanity,
-                  "title": e.tittle,
-                })
-            .toList(),
-      }),
-    );
+    print("to check");
 
-    _order.insert(
-      0,
-      OrderItem(
-          id: json.decode(response.body)["name"],
-          products: cartProducts,
-          amount: total,
-          dateTime: DateTime.now()),
-    );
-    notifyListeners();
+    var finall = DateTime.now();
+    try{
+      final response= await htpp.post(
+        url,
+        body: json.encode({
+          "total": total,
+          "dateTime": finall.toIso8601String(),
+          "products": cartProducts
+              .map((e) => {
+            "id":e.id,
+            "price": e.price,
+            "quanity": e.quanity,
+            "title": e.tittle,
+          })
+              .toList(),
+        }),
+      );
+      _order.insert(
+        0,
+        OrderItem(
+            id: json.decode(response.body)["name"],
+            products: cartProducts,
+            amount: total,
+            dateTime: DateTime.now()),
+      );
+      notifyListeners();
+    }catch(eror){
+      print(eror);
+    }
+
+    print("to check");
+
+
   }
 }
