@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (ctx)=>Auth(),),
 
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
 
     ],
       child: Consumer<Auth>(builder: (ctx,auth,_)=>MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.orange,
           accentColor: Colors.white,

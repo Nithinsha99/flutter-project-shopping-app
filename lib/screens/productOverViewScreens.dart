@@ -47,7 +47,7 @@ class _ProductOverScreenState extends State<ProductOverScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("the shop ap"),
+        backgroundColor: Colors.white,
         actions: [
           PopupMenuButton(icon: Icon(Icons.more_vert),
               onSelected: (FilterOption onSelected) {
@@ -73,14 +73,14 @@ class _ProductOverScreenState extends State<ProductOverScreen> {
               ]),
           Consumer<Cart>(
 
-              builder: (_, cart, __) =>
-                  Badges(child: IconButton(
-                    icon: Icon(Icons.shopping_cart), onPressed: () {
-                      Navigator.of(context).pushNamed(CartScreen.routerName);
-                  },),
-                    value: cart.cartCount.toString(),
+            builder: (_, cart, __) =>
+                Badges(child: IconButton(
+                  icon: Image.network("https://static.thenounproject.com/png/1842086-200.png"), onPressed: () {
+                  Navigator.of(context).pushNamed(CartScreen.routerName);
+                },),
+                  value: cart.cartCount.toString(),
 
-                  ),
+                ),
 
 
           ),

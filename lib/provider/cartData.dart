@@ -58,6 +58,11 @@ class Cart with ChangeNotifier{
     }
     notifyListeners();
   }
+  int sum(su){
+    su=su+1;
+    notifyListeners();
+
+  }
 
 
 }
