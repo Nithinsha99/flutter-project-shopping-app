@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:shoppingapp/models/product.dart';
 import 'package:shoppingapp/provider/cartData.dart';
 import 'package:shoppingapp/provider/products.dart';
+import 'package:shoppingapp/screens/cartScreen.dart';
 
 
 class DetailBody extends StatefulWidget {
@@ -88,8 +89,10 @@ class _DetailBodyState extends State<DetailBody> {
                               //fontFamily: "rock",
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
+
                             ),
                           ),
+
                           RichText(
                               text: TextSpan(children: [
                             TextSpan(
@@ -97,10 +100,11 @@ class _DetailBodyState extends State<DetailBody> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 25,
+
                                   foreground: Paint()
                                     ..style = PaintingStyle.stroke
                                     ..strokeWidth = 1
-                                    ..color = Colors.blueGrey,
+                                    ..color = Colors.red,
                                 ))
                           ])),
                           Expanded(
@@ -142,10 +146,45 @@ class _DetailBodyState extends State<DetailBody> {
                           //fontFamily: "rock",
                         ),),
                       ),
+                      SizedBox(
+                        height: 30,
+                      ),
                       Container(
                         child: Add(cart: cart, loadedProducts: loadedProducts),
 
-                      )
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(" quanity: ${cart.quanitye.toString()=="null"?"0":cart.quanitye.toString()}",style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),),
+
+                      SizedBox(
+                        height: 20,
+                      ),
+
+                      Text(" the total  Amount: ${cart.totalAmount.toString()}",style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+
+                      ),),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                        child:IconButton(
+                          icon: Image.network("https://static.thenounproject.com/png/1842086-200.png"),
+                          iconSize: 40,
+                          color: Colors.blue,
+                          padding: EdgeInsets.symmetric(horizontal: 40),
+                          onPressed: (){
+                            Navigator.of(context).pushNamed(CartScreen.routerName);
+                          },
+                        )
+                      ),
+
 
 
                     ],
@@ -170,6 +209,7 @@ class Add extends StatefulWidget {
   final Cart cart;
   final Products loadedProducts;
 
+
   @override
   _AddState createState() => _AddState();
 }
@@ -179,40 +219,28 @@ class _AddState extends State<Add> {
   bool ch;
   @override
   Widget build(BuildContext context) {
+    //final car=Provider.of<CartItem>(context).quanity;
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        IconButton(icon: Image.network("https://static.thenounproject.com/png/1842086-200.png"), onPressed: (){
-          setState(() {
-            widget.cart.addCart(widget.loadedProducts.id, widget.loadedProducts.tittle, widget.loadedProducts.price);
-            check=false;
-
-          });
-        },iconSize: 30,),
-        Container(
-          width: check?100:150,
-          child: check?Text("the quanity of products = ${
-          widget.cart.totalAmount
-          }"):Container(
-            width: 50,
-            child: Row(
-              children: [
-                IconButton(icon: Icon(Icons.add), onPressed: (){
-                  widget.cart.addCart(widget.loadedProducts.id, widget.loadedProducts.tittle, widget.loadedProducts.price);
-                }),
-                IconButton(icon: Icon(Icons.minimize), onPressed: (){
-                  widget.cart.removeSingleItem(widget.loadedProducts.id);
-                }),
-                Text(widget.cart.totalAmount.toString()),
-              ],
-            )
-          )
-        )
+        IconButton(icon: Icon(Icons.add), onPressed: (){
+          widget.cart.addCart(widget.loadedProducts.id, widget.loadedProducts.tittle, widget.loadedProducts.price);
 
 
+        },
+          color: Colors.red,
+        iconSize: 30
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        IconButton(icon: Icon(Icons.minimize), onPressed: (){
+          widget.cart.removeSingleItem(widget.loadedProducts.id);
 
-
-
-      ],
-    );
+        },
+        color: Colors.red,
+        iconSize: 30,)
+    ]
+          );
   }
 }

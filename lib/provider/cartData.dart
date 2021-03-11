@@ -33,6 +33,14 @@ class Cart with ChangeNotifier{
 
 
   }
+  int get quanitye{
+    int qaunity;
+    _item.forEach((key, value) {qaunity=value.quanity.toInt();});
+
+
+    return qaunity;
+
+  }
 
   int get cartCount{
     return
@@ -58,11 +66,7 @@ class Cart with ChangeNotifier{
     }
     notifyListeners();
   }
-  int sum(su){
-    su=su+1;
-    notifyListeners();
 
-  }
 
 
 }

@@ -77,13 +77,14 @@ class _falatButtonState extends State<falatButton> {
   var che=false;
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return FlatButton(
       onPressed:(widget.cart.totalAmount<=0 || che)?null : () async {
         setState(() {
           che=true;
 
         });
-        print("hello");
+
         await Provider.of<Orders>(context,listen: false).addOrder(widget.cart.item.values.toList(), widget.cart.totalAmount);
 
         setState(() {
